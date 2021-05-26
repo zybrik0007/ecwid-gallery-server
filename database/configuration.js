@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize')
 
-const sequelize = new Sequelize('gallery', 'admin', '123456',
+const sequelize = new Sequelize('gallery', 'root', '',
     {
         host: 'localhost',
-        dialect: 'mysql',
+        dialect: 'postgres',
         pool: {
             max: 5,
             min: 0,
@@ -13,6 +13,10 @@ const sequelize = new Sequelize('gallery', 'admin', '123456',
             timestamps: false
         }
     });
+
+sequelize.createSchema('gallery').then(() => console.log('Shema gallery add')).catch(() => console.log('Schema gallery no add'))
+
+
 
 module.exports.sequelize = sequelize;
 
