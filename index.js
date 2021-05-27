@@ -10,7 +10,7 @@ const upload = multer({ dest: 'uploads/' })
 
 
 const server = express()
-const port = process.env.port || 4000;
+const port = 4000;
 server.use(cors());
 
 server.use(bodyParser.json());
