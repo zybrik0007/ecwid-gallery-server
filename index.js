@@ -4,6 +4,7 @@ const cors = require('cors')
 const multer  = require("multer");
 const routerJSON = require('./routing/routerJSON');
 const routerImage = require('./routing/routerImage');
+const path = require('path')
 
 
 const upload = multer({ dest: 'uploads/' })
@@ -17,12 +18,17 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 
 server.use('/images', express.static(__dirname + '/public'));
-
-server.use('/image', routerImage);
-server.use('/image/id', routerImage);
+server.use(express.static(path.join(__dirname, 'build')));
 server.use('/json', upload.single('file'), routerJSON);
 
-server.get('/', routerImage)
+server.use('/get', routerImage)
+server.use('/put', routerImage)
+server.use('/delete', routerImage)
+
+/*server.use('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});*/
+
 
 
 

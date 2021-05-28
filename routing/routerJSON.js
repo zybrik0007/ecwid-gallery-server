@@ -15,6 +15,7 @@ const query = new queryClass();
 /*Добавление изображения по JSON*/
 routerJSON.put('/',
     async (req, res) => {
+        res.header('Access-Control-Allow-Origin', '*');
         const file = await req.file;
 
         /*Проверка типа файла*/
