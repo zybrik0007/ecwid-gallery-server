@@ -11,10 +11,8 @@ const query = new queryClass();
 
 /*Добавление изображения по URL*/
 routerImage.put('/', async (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
     const request = await req;
     console.log(request.body.request)
-
     /*Полуение параметров изображения*/
     const imageParams = await query.verificationPhoto(request.body.request);
     if(imageParams instanceof Error) {
@@ -47,7 +45,6 @@ routerImage.put('/', async (req, res) => {
         res.send({error: errors.noAddPhotoOne})
         return;
     }
-
     res.status(200)
     res.send({})
 
@@ -55,7 +52,6 @@ routerImage.put('/', async (req, res) => {
 
 /*Удаление изображения по id*/
 routerImage.delete('/', async (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
     const request = await req;
     /*Удаление из базы данных*/
     const response = await queryDb.photoDestroy(request.body.id)
@@ -66,8 +62,8 @@ routerImage.delete('/', async (req, res) => {
         return;
     }
     /*Удаление из директриии*/
-    const responseDirectory = await query.deletePhotoDirectory(request.body.request);
-    if (response instanceof Error) {
+    const responseDirectory = await query.deletePhotoDirectory(request.body.id);
+    if (responseDirectory instanceof Error) {
         res.status(501)
         res.send({error: errors.errorDeleteDirectory})
         return;
@@ -77,28 +73,23 @@ routerImage.delete('/', async (req, res) => {
 })
 
 routerImage.get('/', async (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    console.log('123')
     const request = await req;
     const response = await queryDb.getPhotosDB(request.query.count);
     const responseString = JSON.stringify({photos: response});
-    res.header('Access-Control-Allow-Origin', '*')
     res.status(200);
     res.send(responseString)
-    console.log(responseString);
 })
 /*Получение изображения по id*/
 routerImage.get('/image/id', async (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
     const response = await req.query.id
     const search = await queryDb.searchPhotoId(req.query.id)
     res.status(200)
     res.send({search})
-    console.log('search', search)
 })
 
 /*Получение суммы всех изображений*/
 routerImage.get('/image/count', async(req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
     const response = await queryDb.getCount()
     res.status(200);
     res.send(response)

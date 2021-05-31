@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
+const config = require('../configuration/congiguration')
 
-const sequelize = new Sequelize('gallery', 'root', '123456',
+const sequelize = new Sequelize(config.dataBaseName, config.dataBaseLogin, config.dataBasePassword,
     {
         host: 'localhost',
         dialect: 'mysql',
@@ -13,6 +14,10 @@ const sequelize = new Sequelize('gallery', 'root', '123456',
             timestamps: false
         }
     });
+
+sequelize.createSchema(config.dataSchemaName)
+    .then(() => {console.log('Schema add')})
+    .catch((err)=>{console.log('Schema err', err)})
 
 
 module.exports.sequelize = sequelize;

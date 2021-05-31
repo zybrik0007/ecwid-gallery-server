@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize')
 const connect = require('./configuration')
+const config = require('../configuration/congiguration')
 
-const Gallery = connect.sequelize.define('gallery', {
+const Gallery = connect.sequelize.define(config.dataSchemaName, {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,

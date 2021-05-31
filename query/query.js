@@ -37,7 +37,7 @@ class Query {
 
     async deletePhotoDirectory(id) {
         try {
-           return await fs.unlinkSync(path.resolve(__dirname, './public' , id + '.jpg'))
+           return await fs.unlinkSync(path.resolve(__dirname, '../public' , id + '.jpg'))
         } catch (err) {
             return err
         }
